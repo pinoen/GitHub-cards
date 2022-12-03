@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Login from "./components/pages/Login";
+import Home from "./components/pages/Home";
+import Register from "./components/pages/Register";
+import Profile from "./components/pages/Profile";
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import ProtectedRoutes from "./components/commons/ProtectedRoutes";
+import GHContext from './components/commons/GHContext'
 
 function App() {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <GHContext>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+
+            <Route element={<ProtectedRoutes />}>
+              <Route path="/home" element={<Home />} />
+              <Route path="/profile/:user" element={<Profile />} />
+            </Route>
+
+          </Routes>
+        </GHContext>
+      </BrowserRouter>
     </div>
   );
 }
